@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПДД: Твоя Безопасность</title>
+    
+    <!-- Стили (CSS) встроены прямо в HTML, чтобы не создавать отдельный файл -->
+    <style>
+        /* --- Общие стили --- */
+        :root {
+            --primary-color: #2e7d32; /* Основной зеленый цвет */
+            --secondary-color: #ffc107; /* Акцентный желтый */
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --white-color: #fff;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Плавная прокрутка по ссылкам */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+        }
+
+        /* --- Шапка сайта --- */
+        .header {
+            background-color: var(--white-color);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navigation ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        .navigation li {
+            margin-left: 25px;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Главный экран --- */
+        .hero {
+            background-color: #e8f5e9;
+            text-align: center;
+            padding: 140px 0 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* --- Карточки с правилами --- */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--white-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .card svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            fill: var(--primary-color);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .card li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* --- Викторина --- */
+        #quiz {
+            background-color: #4CAF50;
+            color: var(--white-color);
+        }
+        
+        #quiz h2 {
+            color: var(--white-color);
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: var(--white-color);
+            color: var(--dark-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .quiz-btn {
+            background-color: var(--light-color);
+            border: 2px solid #ddd;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            border-color: var(--primary-color);
+            background-color: #e8f5e9;
+        }
+        
+        .quiz-btn.correct {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .quiz-btn.wrong {
+            background-color: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .hide {
+            display: none;
+        }
+        
+        #restart-btn {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        #restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- Подвал --- */
+        .footer {
+            background-color: var(--dark-color);
+            color: #ccc;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        /* --- Адаптивность для мобильных --- */
+        @media (max-width: 768px) {
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+            .header .container {
+                flex-direction: column;
+            }
+            .navigation ul {
+                margin-top: 10px;
+            }
+            .hero {
+                padding-top: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка с навигацией -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">ПДД.ру</a>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#rules">Правила</a></li>
+                    <li><a href="#quiz">Викторина</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Главный экран -->
+        <section class="hero">
+            <div class="container">
+                <h1>Будь на дороге, как дома</h1>
+                <p>Простые и понятные правила дорожного движения для всех, кто ходит и ездит.</p>
+            </div>
+        </section>
+
+        <!-- Раздел с правилами -->
+        <section id="rules">
+            <div class="container">
+                <h2>Главное для твоей безопасности</h2>
+                <div class="rules-grid">
+                    <!-- Карточка Пешехода -->
+                    <div class="card">
+                        <!-- Встроенная картинка (SVG-код) -->
+                        <svg viewBox="0 0 24 24"><path d="M14.5,4A1.5,1.5 0 0,0 13,5.5A1.5,1.5 0 0,0 14.5,7A1.5,1.5 0 0,0 16,5.5A1.5,1.5 0 0,0 14.5,4M15,20V15.5H18.5L16.5,9.5L13.89,11.6L12.2,9.91L9.5,12.63V20H11V14L13,12L15,14V20H15Z"></path></svg>
+                        <h3>Правила для пешехода</h3>
+                        <ul>
+                            <li><b>Смотри по сторонам.</b> Убери телефон и сними наушники, когда переходишь дорогу.</li>
+                            <li><b>Используй "зебру".</b> Переходи дорогу только по пешеходному переходу.</li>
+                            <li><b>Жди зеленый.</b> Даже если машин нет, иди только на зеленый свет светофора.</li>
+                            <li><b>Будь заметным.</b> Вечером носи одежду со светоотражателями.</li>
+                        </ul>
+                    </div>
+                    <!-- Карточка Водителя СИМ -->
+                    <div class="card">
+                        <!-- Встроенная картинка (SVG-код) -->
+                        <svg viewBox="0 0 24 24"><path d="M18,15V17H16V15H18M21,13A2,2 0 0,0 19,15V17A2,2 0 0,0 21,19H22V21H18V19H16A2,2 0 0,0 14,17V15A2,2 0 0,0 12,13H8.35L6.93,4.47C6.82,3.88 6.27,3.5 5.69,3.61C5.1,3.72 4.7,4.27 4.81,4.85L6.6,13H5A2,2 0 0,0 3,15V17A2,2 0 0,0 5,19H6V21H2V19H3A2,2 0 0,0 5,17V15A2,2 0 0,0 3,13H2V11H13.68L12.5,5.82L10.7,5.27L11.2,3.36L14.32,4.4L15.09,8.04C15.17,8.5 15.6,8.87 16.1,8.79C16.6,8.7 16.96,8.26 16.88,7.77L16.27,4.88L18.63,4.19L19.32,7.24C20.66,7.68 21.63,8.79 21.8,10.21C22,12 21,13 21,13Z"></path></svg>
+                        <h3>На самокате и велосипеде</h3>
+                        <ul>
+                            <li><b>Спешивайся.</b> Переходи дорогу по "зебре" только пешком, ведя транспорт рядом.</li>
+                            <li><b>Один самокат — один человек.</b> Кататься вдвоем на одном самокате запрещено.</li>
+                            <li><b>Знай свою дорогу.</b> Ездить можно по велодорожкам, а если их нет — по тротуару, не мешая пешеходам.</li>
+                            <li><b>Надень шлем.</b> Это не просто аксессуар, это твоя защита.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Раздел с викториной -->
+        <section id="quiz">
+            <div class="container">
+                <h2>Проверь себя!</h2>
+                <div class="quiz-container">
+                    <div id="question-container">
+                        <h3 id="question-text" style="text-align: center;">Текст вопроса</h3>
+                        <div id="answer-buttons" class="btn-grid">
+                            <!-- Кнопки с ответами будут создаваться здесь -->
+                        </div>
+                    </div>
+                    <div id="result-container" class="hide" style="text-align: center;">
+                        <h2>Твой результат:</h2>
+                        <p id="score-text" style="font-size: 1.2rem;"></p>
+                        <button id="restart-btn">Попробовать снова</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="footer">
+        <div class="container">
+            <!-- !!! ПОМЕНЯЙ ЭТО !!! Напиши здесь свое имя, фамилию и класс -->
+            <p>© 2024. Разработали: [Роман Гаврилов,Александр Беляев, 7 класс, г. Красноярск].</p>
+            <p>Сайт создан для всероссийского конкурса по безопасности дорожного движения.</p>
+        </div>
+    </footer>
+
+    <!-- Логика теста (JavaScript) встроена прямо в HTML -->
+    <script>
+        const questionContainer = document.getElementById('question-container');
+        const questionText = document.getElementById('question-text');
+        const answerButtons = document.getElementById('answer-buttons');
+        const resultContainer = document.getElementById('result-container');
+        const scoreText = document.getElementById('score-text');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const questions = [
+            {
+                question: "Что должен сделать самокатчик перед 'зеброй'?",
+                answers: [
+                    { text: "Посигналить и быстро проехать", correct: false },
+                    { text: "Сойти с самоката и перейти пешком", correct: true },
+                    { text: "Проехать, если нет машин", correct: false }
+                ]
+            },
+            {
+                question: "Можно ли слушать громкую музыку в наушниках при переходе дороги?",
+                answers: [
+                    { text: "Да, если это помогает идти быстрее", correct: false },
+                    { text: "Только в одном наушнике", correct: false },
+                    { text: "Нет, это опасно и отвлекает внимание", correct: true }
+                ]
+            },
+            {
+                question: "Для чего нужны светоотражатели на одежде?",
+                answers: [
+                    { text: "Чтобы быть модным", correct: false },
+                    { text: "Чтобы водитель видел тебя в темноте", correct: true },
+                    { text: "Они светятся и освещают дорогу", correct: false }
+                ]
+            },
+            {
+                question: "Сколько человек могут ехать на одном электросамокате?",
+                answers: [
+                    { text: "Только один", correct: true },
+                    { text: "Два, если они не тяжелые", correct: false },
+                    { text: "Сколько поместится", correct: false }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultContainer.classList.add('hide');
+            questionContainer.classList.remove('hide');
+            showNextQuestion();
+        }
+
+        function showNextQuestion() {
+            resetState();
+            const question = questions[currentQuestionIndex];
+            questionText.innerText = question.question;
+
+            question.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer.text;
+                button.classList.add('quiz-btn');
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener('click', selectAnswer);
+                answerButtons.appendChild(button);
+            });
+        }
+
+        function selectAnswer(e) {
+            const selectedButton = e.target;
+            const isCorrect = selectedButton.dataset.correct === "true";
+
+            if (isCorrect) {
+                score++;
+            }
+            
+            Array.from(answerButtons.children).forEach(button => {
+                setStatusClass(button, button.dataset.correct === "true");
+                button.disabled = true; // Блокируем кнопки после ответа
+            });
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    showNextQuestion();
+                } else {
+                    showResult();
+                }
+            }, 1500);
+        }
+
+        function showResult() {
+            questionContainer.classList.add('hide');
+            resultContainer.classList.remove('hide');
+            let resultMessage = `Ты правильно ответил на ${score} из ${questions.length} вопросов. `;
+            if (score === questions.length) {
+                resultMessage += "Отлично, ты знаешь все правила!";
+            } else if (score >= questions.length / 2) {
+                resultMessage += "Хороший результат, но стоит повторить некоторые моменты.";
+            } else {
+                resultMessage += "Тебе стоит внимательнее изучить правила.";
+            }
+            scoreText.innerText = resultMessage;
+        }
+
+        function resetState() {
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+
+        function setStatusClass(element, correct) {
+            if (correct) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('wrong');
+            }
+        }
+
+        restartBtn.addEventListener('click', startQuiz);
+
+        // Первый запуск теста
+        startQuiz();
+    </script>
+</body>
+</html>
